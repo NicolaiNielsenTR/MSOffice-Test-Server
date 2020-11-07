@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<title>Microsoft Office Link Test Server</title>
+<script>
+function encode() {
+	var decoded = document.getElementById("decoded").value;
+	var encoded = encodeURIComponent(decoded);
+	document.getElementById("encoded").value = encoded;
+}
+
+function decode() {
+	var encoded = document.getElementById("encoded").value;
+	var decoded = decodeURIComponent(encoded);
+	document.getElementById("decoded").value = decoded;
+}
+
+</script>
+</head>
+<body>
+<h1>Microsoft Office Link Test Server</h1>
+<p>This server was created to test how Microsoft Office handles embedded links.<p>
+<p>It can be instructed to serve redirects, custom status codes, as well as attempt to bypass Microsoft Office link handling.</p>
+<h2>Features</h2>
+<ul>
+	<li>All requests are logged on the server console.</li>
+	<li>Microsoft Office "bypass" can be activated by adding a <code>bypassOffice</code> parameter to the request.</li>
+	<li>The server can be instructed to return a server-side redirect to the browser using the <code>redirect</code> parameter.</li>
+	<li>The server can be instructed to return specific content via the <code>content</code> request parameter.</li>
+	<li>The server can be instructed to respond with a specific HTTP status code <code>status</code> request parameter.</li>
+</ul>
+
+<h2>Sample Links to Try</h2>
+<p>The following is a collection of links to try in you browser and in various Office products to see the behavior (all links open in new tabs):</p>
+<ul>
+	<li><a target="_blank" href="http://127.0.0.1:3000/first?redirect=%2Fsecond">Redirect once from /first to /second.</a></li>
+	<li><a target="_blank" href="http://127.0.0.1:3000/first?redirect=%2Fsecond%3Fredirect%3D%2Fthird">Redirect once from /first to /second to /third.</a></li>
+	<li><a target="_blank" href="http://127.0.0.1:3000/first?bypassOffice=true&redirect=%2Fsecond">Redirect once from /first to /second, but send a bogus response before the first redirect if an Office user agent is detected.</a></li>
+	<li><a target="_blank" href="http://127.0.0.1:3000/first?bypassOffice=true&redirect=%2Fsecond%3Fredirect%3D%2Fthird">Redirect once from /first to /second to /third, but send a bogus response before the first redirect if an Office user agent is detected.</a></li>
+</ul>
+
+<h2>URL Encoder/decoder</h2>
+<p>To aid in generating parameters for the <code>redirect</code> parameter, we've included the following simple URI encoder/decoder.</p>
+<textarea id="decoded" rows=3 cols=100>
+http://127.0.0.1:3000/first?redirect=/second
+</textarea>
+<br/>
+<button onclick="encode()">&#x25bc; encode &#x25bc;</button>
+<button onclick="decode()">&#x25b2; decode &#x25b2;</button>
+<br/>
+<textarea id="encoded" rows=3 cols=100>
+</textarea>
+</body>
+</html>
